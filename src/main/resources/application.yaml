@@ -1,8 +1,10 @@
+server:
+  port: 8080
 spring:
   application:
     name: api
   datasource:
-    url: jdbc:mysql://localhost:3306/your_db
-    username: your_username
-    password: your_password
+    url: jdbc:mysql://localhost:3306/client
+    username: root
+    password: Hoth1977*
     driver-class-name: com.mysql.cj.jdbc.Driver
