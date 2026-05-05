@@ -35,6 +35,6 @@ import java.util.List;
 
     @DeleteMapping("/{idCliente}")
     public void deleteCliente(@PathVariable Long idCliente) {
-        return clientService.deleteClient(idCliente);
+        clientService.deleteClient(idCliente);
     }
 }
