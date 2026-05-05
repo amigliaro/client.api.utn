@@ -28,4 +28,13 @@ public class ClientService {
     public Client insertClient(Client client) {
        return clientRepository.save(client);
     }
+
+    public Client updateClient(Long idCliente, Client client) {
+        client.setId(idCliente);
+        return clientRepository.save(client);
+    }
+
+    public void deleteClient(Long idCliente) {
+        clientRepository.deleteById(idCliente);
+    }
 }

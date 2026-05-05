@@ -23,4 +23,9 @@ public class Client {
     private String telefono;
     private String email;
     private LocalDate fechaAlta;
+
+    public boolean esClienteReciente(int diasUmbral) {
+        if (fechaAlta == null) return false;
+            return !fechaAlta.isBefore(LocalDate.now().minusDays(diasUmbral));
+    }
 }
