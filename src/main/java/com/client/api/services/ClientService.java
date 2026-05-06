@@ -30,9 +30,18 @@ public class ClientService {
     }
 
     public Client updateClient(Long idCliente, Client client) {
-        client.setId(idCliente);
-        return clientRepository.save(client);
+        Client auxClient = clientRepository.getReferenceById(idCliente);
+
+        if (client.getNombre() != null) auxClient.setNombre(client.getNombre());
+        if (client.getApellido() != null) auxClient.setApellido(client.getApellido());
+        if (client.getEmail() != null) auxClient.setEmail(client.getEmail());
+        if (client.getTipoDocumento() != null) auxClient.setTipoDocumento(client.getTipoDocumento());
+        if (client.getTelefono() != null) auxClient.setTelefono(client.getTelefono());
+        if (client.getDireccion() != null) auxClient.setDireccion(client.getDireccion());
+
+        return clientRepository.save(auxClient);
     }
+
 
     public void deleteClient(Long idCliente) {
         clientRepository.deleteById(idCliente);
