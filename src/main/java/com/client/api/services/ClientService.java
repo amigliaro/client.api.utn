@@ -42,7 +42,6 @@ public class ClientService {
         return clientRepository.save(auxClient);
     }
 
-
     public void deleteClient(Long idCliente) {
         clientRepository.deleteById(idCliente);
     }
