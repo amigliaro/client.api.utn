@@ -1,7 +1,9 @@
 package com.client.api.controllers;
 
+import com.client.api.dto.DolarDTO;
 import com.client.api.models.Client;
 import com.client.api.services.ClientService;
+import com.client.api.services.DolarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,8 +12,12 @@ import java.util.List;
 @RestController
     @RequestMapping("/clientes")
     public class ClientController {
+
     @Autowired
     private ClientService clientService;
+
+    @Autowired
+    private DolarService dolarService;
 
     @GetMapping
     public List<Client> listarClientes() {
@@ -36,5 +42,10 @@ import java.util.List;
     @DeleteMapping("/{idCliente}")
     public void deleteCliente(@PathVariable Long idCliente) {
         clientService.deleteClient(idCliente);
+    }
+
+    @GetMapping("/dolar")
+    public DolarDTO getDolarOficial() {
+        return dolarService.obtenerDolarOficial();
     }
 }
