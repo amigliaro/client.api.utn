@@ -1,6 +1,7 @@
 package com.client.api.services;
 
 import com.client.api.dto.Dolar;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
@@ -8,12 +9,15 @@ import org.springframework.web.client.RestClient;
 @Service
 public class DolarService {
 
-    private final RestClient restClient = RestClient.create("https://dolarapi.com");
+    @Value("${dolar.api.url}")
+    private String dolarurl;
+
+    private final RestClient restClient = RestClient.create();
 
     public Dolar obtenerDolarOficial() {
 
         return restClient.get()
-                .uri("/v1/dolares/oficial")
+                .uri(dolarurl)
                 .accept(MediaType.APPLICATION_JSON)
                 .retrieve()
                 .body(Dolar.class);
