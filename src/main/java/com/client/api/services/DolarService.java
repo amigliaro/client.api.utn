@@ -1,21 +1,22 @@
 package com.client.api.services;
 
-import com.client.api.dto.DolarDTO;
+import com.client.api.dto.Dolar;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
-import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.client.RestClient;
 
 @Service
 public class DolarService {
 
-    private final WebClient webClient = WebClient.create("https://dolarapi.com");
+    private final RestClient restClient = RestClient.create("https://dolarapi.com");
 
-    public DolarDTO obtenerDolarOficial() {
+    public Dolar obtenerDolarOficial() {
 
-        return webClient.get()
+        return restClient.get()
                 .uri("/v1/dolares/oficial")
+                .accept(MediaType.APPLICATION_JSON)
                 .retrieve()
-                .bodyToMono(DolarDTO.class)
-                .block();
+                .body(Dolar.class);
     }
 
 }

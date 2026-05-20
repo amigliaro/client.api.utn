@@ -1,15 +1,13 @@
 package com.client.api.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class DolarDTO {
+@Builder
+public class Dolar {
 
     private String moneda;
     private String casa;

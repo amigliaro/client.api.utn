@@ -11,9 +11,10 @@ import java.time.LocalDate;
 @Entity
 @Getter
 @Setter
+@ToString
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
 public class Client {
 
     @Id
