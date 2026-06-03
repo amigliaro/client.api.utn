@@ -1,5 +1,6 @@
 package com.client.api.controllers;
 
+import com.client.api.exceptions.CustomException;
 import com.client.api.models.Client;
 import com.client.api.services.ClientService;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +23,7 @@ import java.util.List;
     }
 
     @GetMapping("/{idCliente}")
-    public Client getClienteById(@PathVariable Long idCliente) {
+    public Client getClienteById(@PathVariable Long idCliente) throws CustomException {
         return clientService.getClienteById(idCliente);
     }
 

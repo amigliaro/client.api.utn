@@ -1,8 +1,8 @@
 package com.client.api.services;
 
+import com.client.api.exceptions.CustomException;
 import com.client.api.models.Client;
 import com.client.api.repositories.ClientRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,23 +10,31 @@ import java.util.List;
 @Service
 public class ClientService {
 
-    @Autowired
-    private ClientRepository clientRepository;
+    private final ClientRepository clientRepository;
+
+    public ClientService(ClientRepository clientRepository) {
+        this.clientRepository = clientRepository;
+    }
+
 
     public List<Client> getCliente() {
         return clientRepository.findAll();
     }
 
-    public Client getClienteById(Long id) {
-
-        if  (clientRepository.findById(id).isPresent()) {
+    public Client getClienteById(Long id) throws CustomException {
+        if (clientRepository.findById(id).isPresent()) {
             return clientRepository.findById(id).get();
+        } else {
+            throw new CustomException("No se encontró el cliente solicitado");
         }
-        return null;
     }
 
     public Client insertClient(Client client) {
-       return clientRepository.save(client);
+        try {
+            return clientRepository.save(client);
+        } catch (Exception ex) {
+            throw new CustomException(ex.getMessage());
+        }
     }
 
     public Client updateClient(Long idCliente, Client client) {
