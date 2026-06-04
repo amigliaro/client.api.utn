@@ -25,7 +25,7 @@ class ClientRepositoryTest {
     void debeGuardarCliente() {
         Client cliente = new Client(6L, "Prueba", "H2", "","","","", LocalDate.of(2026,5,4));
         clientRepository.save(cliente);
-        Optional<Client> clienteOptional = clientRepository.findById(cliente.getId());
+        Optional<Client> clienteOptional = clientRepository.findById(cliente.getClientId());
         assertTrue(clienteOptional.isPresent());
         log.info("Cliente encontrado: {}", clienteOptional.get());
     }

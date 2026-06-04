@@ -1,5 +1,6 @@
 package com.client.api.controllers;
 
+import com.client.api.dto.AccountExtended;
 import com.client.api.models.Account;
 import com.client.api.services.AccountService;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +18,7 @@ public class AccountController {
     }
 
     @GetMapping
-    public List<Account> listarCuentas() {
+    public List<AccountExtended> listarCuentas() {
         return accountService.listarCuentas();
     }
 
@@ -26,9 +27,9 @@ public class AccountController {
         return accountService.getCuentaById(idCuenta);
     }
 
-    @PostMapping
-    public Account insertarCuenta(@RequestBody Account cuenta) {
-        return accountService.insertarCuenta(cuenta);
+    @PostMapping("/{idCliente}")
+    public Account insertarCuenta(@RequestBody Account cuenta, @PathVariable Long idCliente) {
+        return accountService.insertarCuenta(idCliente, cuenta);
     }
 
     @PutMapping("/{idCuenta}")

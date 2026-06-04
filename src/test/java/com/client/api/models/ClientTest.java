@@ -15,7 +15,7 @@ class ClientTest {
     void esClienteReciente() {
         // generar cliente que cumpla la condición y chequear que de true}
         Client cliente = Client.builder()
-                .id(5L)
+                .clientId(5L)
                 .nombre("Diego")
                 .apellido("Diaz")
                 .tipoDocumento("")
@@ -31,7 +31,7 @@ class ClientTest {
     void noEsClienteReciente() {
         // generar cliente que no cumpla la condición y chequear que de false
         Client cliente = Client.builder()
-                .id(5L)
+                .clientId(5L)
                 .nombre("Diego")
                 .apellido("Diaz")
                 .tipoDocumento("")
