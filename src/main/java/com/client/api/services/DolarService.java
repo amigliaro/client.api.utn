@@ -1,7 +1,7 @@
 package com.client.api.services;
 
 import com.client.api.dto.Dolar;
-import com.client.api.exceptions.CustomException;
+import com.client.api.exceptions.ExternalApiException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
@@ -19,7 +19,7 @@ public class DolarService {
         try {
             return restClient.get().uri(dolarurl).accept(MediaType.APPLICATION_JSON).retrieve().body(Dolar.class);
         } catch (HttpClientErrorException e) {
-            throw new CustomException("No se pudo obtener la cotización del dólar");
+            throw new ExternalApiException("No se pudo obtener la cotización del dólar");
         }
     }
 

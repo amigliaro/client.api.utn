@@ -1,11 +1,13 @@
 package com.client.api.services;
 
-import com.client.api.exceptions.CustomException;
+import com.client.api.exceptions.InternalServerErrorException;
+import com.client.api.exceptions.NotFoundException;
 import com.client.api.models.Client;
 import com.client.api.repositories.ClientRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ClientService {
@@ -18,39 +20,62 @@ public class ClientService {
 
 
     public List<Client> getCliente() {
-        return clientRepository.findAll();
+        try {
+
+            return clientRepository.findAll();
+        } catch (InternalServerErrorException ex) {
+            throw new InternalServerErrorException("Error al listar los clientes: " + ex.getMessage());
+        }
     }
 
-    public Client getClienteById(Long id) throws CustomException {
-        if (clientRepository.findById(id).isPresent()) {
-            return clientRepository.findById(id).get();
+    public Client getClienteById(Long id) throws NotFoundException {
+        Optional<Client> auxCliente = clientRepository.findById(id);
+        if (auxCliente.isPresent()) {
+            return auxCliente.get();
         } else {
-            throw new CustomException("No se encontró el cliente solicitado");
+            throw new NotFoundException("No se encontró el cliente solicitado");
         }
     }
 
     public Client insertClient(Client client) {
         try {
             return clientRepository.save(client);
-        } catch (Exception ex) {
-            throw new CustomException(ex.getMessage());
+        } catch (InternalServerErrorException ex) {
+            throw new InternalServerErrorException("Error al insertar un cliente: " + ex.getMessage());
         }
     }
 
     public Client updateClient(Long idCliente, Client client) {
-        Client auxClient = clientRepository.getReferenceById(idCliente);
+        Optional<Client> auxClient = clientRepository.findById(idCliente);
 
-        if (client.getNombre() != null) auxClient.setNombre(client.getNombre());
-        if (client.getApellido() != null) auxClient.setApellido(client.getApellido());
-        if (client.getEmail() != null) auxClient.setEmail(client.getEmail());
-        if (client.getTipoDocumento() != null) auxClient.setTipoDocumento(client.getTipoDocumento());
-        if (client.getTelefono() != null) auxClient.setTelefono(client.getTelefono());
-        if (client.getDireccion() != null) auxClient.setDireccion(client.getDireccion());
+        if (auxClient.isPresent()) {
+            if (client.getNombre() != null) auxClient.get().setNombre(client.getNombre());
+            if (client.getApellido() != null) auxClient.get().setApellido(client.getApellido());
+            if (client.getEmail() != null) auxClient.get().setEmail(client.getEmail());
+            if (client.getTipoDocumento() != null) auxClient.get().setTipoDocumento(client.getTipoDocumento());
+            if (client.getTelefono() != null) auxClient.get().setTelefono(client.getTelefono());
+            if (client.getDireccion() != null) auxClient.get().setDireccion(client.getDireccion());
 
-        return clientRepository.save(auxClient);
+        } else {
+            throw new NotFoundException("No se encontró información para el cliente ingresado.");
+        }
+        try {
+            return clientRepository.save(auxClient.get());
+        } catch (InternalServerErrorException ex) {
+            throw new InternalServerErrorException("Error al modificar un cliente: " + ex.getMessage());
+        }
     }
 
     public void deleteClient(Long idCliente) {
-        clientRepository.deleteById(idCliente);
+        Optional<Client> auxClient = clientRepository.findById(idCliente);
+        if (auxClient.isPresent()) {
+            try {
+                clientRepository.deleteById(idCliente);
+            } catch (InternalServerErrorException ex) {
+                throw new InternalServerErrorException("Error al eliminar un cliente: " + ex.getMessage());
+            }
+        } else {
+            throw new NotFoundException("No se encontró información para el cliente ingresado.");
+        }
     }
 }
