@@ -11,14 +11,15 @@ import java.time.LocalDate;
 @Entity
 @Getter
 @Setter
+@ToString
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
 public class Client {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long clientId;
 
     private String nombre;
     private String apellido;
