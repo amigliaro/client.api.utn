@@ -1,5 +1,6 @@
 package com.client.api.services;
 
+import com.client.api.clients.DolarClient;
 import com.client.api.dto.AccountExtended;
 import com.client.api.exceptions.InternalServerErrorException;
 import com.client.api.exceptions.NotFoundException;
@@ -19,12 +20,12 @@ public class AccountService {
 
     private final AccountRepository accountRepository;
     private final ClientRepository clientRepository;
-    private final DolarService dolarService;
+    private final DolarClient dolarClient;
 
-    public AccountService(AccountRepository accountrepository, ClientRepository clientRepository, DolarService dolarService) {
+    public AccountService(AccountRepository accountrepository, ClientRepository clientRepository, DolarClient dolarClient) {
         this.clientRepository = clientRepository;
         this.accountRepository = accountrepository;
-        this.dolarService = dolarService;
+        this.dolarClient = dolarClient;
     }
 
     public List<AccountExtended> listarCuentas() {
@@ -40,7 +41,7 @@ public class AccountService {
                         .numeroCuenta(account.getNumeroCuenta())
                         .saldo(account.getSaldo())
                         .client(account.getClient())
-                        .saldoPesos(account.getSaldo() * dolarService.obtenerDolarOficial().getVenta())
+                        .saldoPesos(account.getSaldo() * dolarClient.obtenerDolarOficial().getVenta())
                         .fechaModificacion(account.getFechaModificacion())
                         .build()
                 );
