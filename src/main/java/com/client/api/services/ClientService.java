@@ -1,7 +1,11 @@
 package com.client.api.services;
 
+import com.client.api.clients.CardClient;
+import com.client.api.dto.Card;
+import com.client.api.dto.ClientDTO;
 import com.client.api.exceptions.InternalServerErrorException;
 import com.client.api.exceptions.NotFoundException;
+import com.client.api.mappers.ClientMapper;
 import com.client.api.models.Client;
 import com.client.api.repositories.ClientRepository;
 import org.springframework.stereotype.Service;
@@ -13,39 +17,41 @@ import java.util.Optional;
 public class ClientService {
 
     private final ClientRepository clientRepository;
+    private final CardClient cardClient;
 
-    public ClientService(ClientRepository clientRepository) {
+    public ClientService(ClientRepository clientRepository, CardClient cardClient) {
         this.clientRepository = clientRepository;
+        this.cardClient = cardClient;
     }
 
 
-    public List<Client> getCliente() {
+    public List<ClientDTO> getCliente() {
         try {
 
-            return clientRepository.findAll();
+            return ClientMapper.clientToDTOList(clientRepository.findAll());
         } catch (InternalServerErrorException ex) {
             throw new InternalServerErrorException("Error al listar los clientes: " + ex.getMessage());
         }
     }
 
-    public Client getClienteById(Long id) throws NotFoundException {
+    public ClientDTO getClienteById(Long id) throws NotFoundException {
         Optional<Client> auxCliente = clientRepository.findById(id);
         if (auxCliente.isPresent()) {
-            return auxCliente.get();
+            return ClientMapper.clientToDTO(auxCliente.get());
         } else {
             throw new NotFoundException("No se encontró el cliente solicitado");
         }
     }
 
-    public Client insertClient(Client client) {
+    public ClientDTO insertClient(Client client) {
         try {
-            return clientRepository.save(client);
+            return ClientMapper.clientToDTO(clientRepository.save(client));
         } catch (InternalServerErrorException ex) {
             throw new InternalServerErrorException("Error al insertar un cliente: " + ex.getMessage());
         }
     }
 
-    public Client updateClient(Long idCliente, Client client) {
+    public ClientDTO updateClient(Long idCliente, Client client) {
         Optional<Client> auxClient = clientRepository.findById(idCliente);
 
         if (auxClient.isPresent()) {
@@ -60,7 +66,7 @@ public class ClientService {
             throw new NotFoundException("No se encontró información para el cliente ingresado.");
         }
         try {
-            return clientRepository.save(auxClient.get());
+            return ClientMapper.clientToDTO(clientRepository.save(auxClient.get()));
         } catch (InternalServerErrorException ex) {
             throw new InternalServerErrorException("Error al modificar un cliente: " + ex.getMessage());
         }
@@ -77,5 +83,9 @@ public class ClientService {
         } else {
             throw new NotFoundException("No se encontró información para el cliente ingresado.");
         }
+    }
+
+    public Card getProductosById(Long idCliente) {
+        return  cardClient.obtenerProductos(idCliente);
     }
 }

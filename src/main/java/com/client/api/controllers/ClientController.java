@@ -1,5 +1,7 @@
 package com.client.api.controllers;
 
+import com.client.api.dto.Card;
+import com.client.api.dto.ClientDTO;
 import com.client.api.exceptions.NotFoundException;
 import com.client.api.models.Client;
 import com.client.api.services.ClientService;
@@ -18,27 +20,32 @@ import java.util.List;
     }
 
     @GetMapping
-    public List<Client> listarClientes() {
+    public List<ClientDTO> listarClientes() {
         return clientService.getCliente();
     }
 
     @GetMapping("/{idCliente}")
-    public Client getClienteById(@PathVariable Long idCliente) throws NotFoundException {
+    public ClientDTO getClienteById(@PathVariable Long idCliente) throws NotFoundException {
         return clientService.getClienteById(idCliente);
     }
 
     @PostMapping
-    public Client insertCliente(@RequestBody Client client) {
+    public ClientDTO insertCliente(@RequestBody Client client) {
         return clientService.insertClient(client);
     }
 
     @PutMapping("/{idCliente}")
-    public Client insertCliente(@PathVariable Long idCliente, @RequestBody Client client) {
+    public ClientDTO insertCliente(@PathVariable Long idCliente, @RequestBody Client client) {
         return clientService.updateClient(idCliente, client);
     }
 
     @DeleteMapping("/{idCliente}")
     public void deleteCliente(@PathVariable Long idCliente) {
         clientService.deleteClient(idCliente);
+    }
+
+    @GetMapping("/{idCliente}/products")
+    public Card getProductosById(@PathVariable Long idCliente) throws NotFoundException {
+        return clientService.getProductosById(idCliente);
     }
 }
