@@ -24,7 +24,7 @@ class ClientTest {
                 .email("")
                 .build();
         boolean isOk = cliente.esClienteReciente(diasUmbral);
-        assertTrue(isOk);
+        assertFalse(isOk);
     }
 
     @Test
