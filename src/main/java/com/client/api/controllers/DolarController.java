@@ -1,7 +1,7 @@
 package com.client.api.controllers;
 
+import com.client.api.clients.DolarClient;
 import com.client.api.dto.Dolar;
-import com.client.api.services.DolarService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -10,14 +10,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/dolar")
 public class DolarController {
 
-    private final DolarService dolarService;
+    private final DolarClient dolarClient;
 
-    public DolarController(DolarService dolarService) {
-        this.dolarService = dolarService;
+    public DolarController(DolarClient dolarClient) {
+        this.dolarClient = dolarClient;
     }
 
     @GetMapping("/cotizacion")
     public Dolar getDolarOficial() {
-        return dolarService.obtenerDolarOficial();
+        return dolarClient.obtenerDolarOficial();
     }
 }
