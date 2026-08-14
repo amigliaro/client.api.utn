@@ -1,6 +1,5 @@
 package com.client.api.dto;
 
-import com.client.api.models.Client;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -16,8 +15,6 @@ public class AccountExtended {
 
     private String numeroCuenta;
     private String moneda;
-    private Client client;
-
     private Double saldo;
     private Double saldoPesos;
     private LocalDateTime fechaModificacion;

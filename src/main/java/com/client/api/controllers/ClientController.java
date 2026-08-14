@@ -3,7 +3,6 @@ package com.client.api.controllers;
 import com.client.api.dto.Card;
 import com.client.api.dto.ClientDTO;
 import com.client.api.exceptions.NotFoundException;
-import com.client.api.models.Client;
 import com.client.api.services.ClientService;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,12 +29,12 @@ import java.util.List;
     }
 
     @PostMapping
-    public ClientDTO insertCliente(@RequestBody Client client) {
+    public ClientDTO insertCliente(@RequestBody ClientDTO client) {
         return clientService.insertClient(client);
     }
 
     @PutMapping("/{idCliente}")
-    public ClientDTO insertCliente(@PathVariable Long idCliente, @RequestBody Client client) {
+    public ClientDTO insertCliente(@PathVariable Long idCliente, @RequestBody ClientDTO client) {
         return clientService.updateClient(idCliente, client);
     }
 
@@ -45,7 +44,7 @@ import java.util.List;
     }
 
     @GetMapping("/{idCliente}/products")
-    public Card getProductosById(@PathVariable Long idCliente) throws NotFoundException {
+    public List<Card> getProductosById(@PathVariable Long idCliente) throws NotFoundException {
         return clientService.getProductosById(idCliente);
     }
 }
