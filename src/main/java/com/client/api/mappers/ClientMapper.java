@@ -18,4 +18,16 @@ public class ClientMapper {
                 .collect(Collectors.toList());
     }
 
+    public static Client DTOToClient(ClientDTO dto) {
+        if (dto == null) return null;
+        Client client = new Client();
+        client.setNombre(dto.getNombre());
+        client.setApellido(dto.getApellido());
+        client.setTipoDocumento(dto.getTipoDocumento());
+        client.setDireccion(dto.getDireccion());
+        client.setTelefono(dto.getTelefono());
+        client.setEmail(dto.getEmail());
+        return client;
+    }
+
 }

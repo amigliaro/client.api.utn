@@ -43,15 +43,15 @@ public class ClientService {
         }
     }
 
-    public ClientDTO insertClient(Client client) {
+    public ClientDTO insertClient(ClientDTO client) {
         try {
-            return ClientMapper.clientToDTO(clientRepository.save(client));
+            return ClientMapper.clientToDTO(clientRepository.save(ClientMapper.DTOToClient(client)));
         } catch (InternalServerErrorException ex) {
             throw new InternalServerErrorException("Error al insertar un cliente: " + ex.getMessage());
         }
     }
 
-    public ClientDTO updateClient(Long idCliente, Client client) {
+    public ClientDTO updateClient(Long idCliente, ClientDTO client) {
         Optional<Client> auxClient = clientRepository.findById(idCliente);
 
         if (auxClient.isPresent()) {
@@ -85,7 +85,7 @@ public class ClientService {
         }
     }
 
-    public Card getProductosById(Long idCliente) {
+    public List<Card> getProductosById(Long idCliente) {
         return  cardClient.obtenerProductos(idCliente);
     }
 }
