@@ -9,7 +9,14 @@ import java.util.stream.Collectors;
 public class ClientMapper {
     public static ClientDTO clientToDTO(Client client) {
         if (client == null) return null;
-        return new ClientDTO(client.getNombre(), client.getApellido(), client.getTipoDocumento(), client.getDireccion(), client.getTelefono(), client.getEmail());
+        return ClientDTO.builder()
+                .nombre(client.getNombre())
+                .apellido(client.getApellido())
+                .tipoDocumento(client.getTipoDocumento())
+                .direccion(client.getDireccion())
+                .telefono(client.getTelefono())
+                .email(client.getEmail())
+                .build();
     }
 
     public static List<ClientDTO> clientToDTOList(List<Client> clients) {
@@ -20,14 +27,14 @@ public class ClientMapper {
 
     public static Client DTOToClient(ClientDTO dto) {
         if (dto == null) return null;
-        Client client = new Client();
-        client.setNombre(dto.getNombre());
-        client.setApellido(dto.getApellido());
-        client.setTipoDocumento(dto.getTipoDocumento());
-        client.setDireccion(dto.getDireccion());
-        client.setTelefono(dto.getTelefono());
-        client.setEmail(dto.getEmail());
-        return client;
+        return Client.builder()
+                .nombre(dto.getNombre())
+                .apellido(dto.getApellido())
+                .tipoDocumento(dto.getTipoDocumento())
+                .direccion(dto.getDireccion())
+                .telefono(dto.getTelefono())
+                .email(dto.getEmail())
+                .build();
     }
 
 }
